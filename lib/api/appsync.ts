@@ -126,4 +126,6 @@ export function createAppSyncAPI(scope: Construct, props: AppSyncAPIProps) {
 		runtime: awsAppsync.FunctionRuntime.JS_1_0_0,
 		pipelineConfig: [listTravelPostsFunction],
 	})
+
+	return api
 }
