@@ -1,0 +1,26 @@
+type Query {
+	getTravelPost(id: ID!): TravelPost @aws_cognito_user_pools @aws_iam
+	listTravelPosts: [TravelPost]! @aws_cognito_user_pools @aws_iam
+}
+
+type Mutation {
+	createTravelPost(input: TravelPostInput!): TravelPost @aws_cognito_user_pools
+}
+
+type Subscription {
+	onTravelPostCreate: TravelPost @aws_subscribe(mutations: ["createTravelPost"])
+}
+
+type TravelPost @aws_cognito_user_pools @aws_iam {
+	id: ID!
+	title: String
+	description: String
+	imgKey: String
+}
+
+input TravelPostInput {
+	id: ID
+	title: String!
+	description: String
+	imgKey: String!
+}
