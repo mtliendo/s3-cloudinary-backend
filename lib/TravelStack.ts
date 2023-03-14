@@ -31,7 +31,7 @@ export class TravelStack extends Stack {
 		})
 		const travelPicsBucket = createTravelPicsBucket(this, {
 			bucketName: `${context.appName}-${context.environment}-bucket`,
-			allowedOrigins: ['http://localhost:3000'],
+			allowedOrigins: context.s3AllowedOrigins,
 			authenticatedRole: cognitoAuth.identityPool.authenticatedRole,
 			unauthenticatedRole: cognitoAuth.identityPool.unauthenticatedRole,
 		})

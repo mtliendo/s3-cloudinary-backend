@@ -4,4 +4,5 @@ export type CDKContext = {
 	region: string
 	environment: string
 	branchName: string
+	s3AllowedOrigins: [string]
 }

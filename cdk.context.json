@@ -5,7 +5,15 @@
 		"appDescription": "A stack for a Travel pic viewer"
 	},
 	"environments": [
-		{ "environment": "develop", "branchName": "develop" },
-		{ "environment": "production", "branchName": "main" }
+		{
+			"environment": "develop",
+			"branchName": "develop",
+			"s3AllowedOrigins": ["http://localhost:3000"]
+		},
+		{
+			"environment": "production",
+			"branchName": "main",
+			"s3AllowedOrigins": ["https://your-prod-frontend.com"]
+		}
 	]
 }
