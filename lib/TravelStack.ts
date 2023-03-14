@@ -36,23 +36,25 @@ export class TravelStack extends Stack {
 			unauthenticatedRole: cognitoAuth.identityPool.unauthenticatedRole,
 		})
 
-		new CfnOutput(this, 'APIUrl', {
-			value: travelAPI.graphqlUrl,
-		})
-		new CfnOutput(this, 'Project Region', {
-			value: context.region,
-		})
-		new CfnOutput(this, 'bucketName', {
-			value: travelPicsBucket.bucketName,
-		})
-		new CfnOutput(this, 'userpool ID', {
-			value: cognitoAuth.userPool.userPoolId,
-		})
-		new CfnOutput(this, 'identitypool ID', {
-			value: cognitoAuth.identityPool.identityPoolId,
-		})
-		new CfnOutput(this, 'webclient ID', {
-			value: cognitoAuth.userPoolClient.userPoolClientId,
+		new CfnOutput(this, 'AmplifyConfig', {
+			value: JSON.stringify({
+				aws_project_region: context.region,
+				Auth: {
+					region: context.region,
+					userPoolId: cognitoAuth.userPool.userPoolId,
+					userPoolWebClientId: cognitoAuth.userPoolClient.userPoolClientId,
+					identityPoolId: cognitoAuth.identityPool.identityPoolId,
+				},
+				Storage: {
+					AWSS3: {
+						bucket: travelPicsBucket.bucketName,
+						region: context.region,
+					},
+				},
+				aws_appsync_graphqlEndpoint: travelAPI.graphqlUrl,
+				aws_appsync_region: context.region,
+				aws_appsync_authenticationType: 'AMAZON_COGNITO_USER_POOLS',
+			}),
 		})
 	}
 }
