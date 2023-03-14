@@ -6,6 +6,7 @@ import { Table } from 'aws-cdk-lib/aws-dynamodb'
 import { IdentityPool } from '@aws-cdk/aws-cognito-identitypool-alpha'
 
 type AppSyncAPIProps = {
+	namingPrefix: string
 	userpool: UserPool
 	travelpostTable: Table
 	identityPool: IdentityPool
@@ -13,7 +14,7 @@ type AppSyncAPIProps = {
 
 export function createAppSyncAPI(scope: Construct, props: AppSyncAPIProps) {
 	const api = new awsAppsync.GraphqlApi(scope, 'APISamples', {
-		name: 'APISamples',
+		name: `${props.namingPrefix}API`,
 		schema: awsAppsync.SchemaFile.fromAsset(
 			path.join(__dirname, 'graphql/schema.graphql')
 		),
@@ -35,7 +36,7 @@ export function createAppSyncAPI(scope: Construct, props: AppSyncAPIProps) {
 	})
 
 	const TravelPostDataSource = api.addDynamoDbDataSource(
-		'TravelPostDataSource',
+		`${props.namingPrefix}DataSource`,
 		props.travelpostTable
 	)
 

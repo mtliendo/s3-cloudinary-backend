@@ -17,12 +17,14 @@ export class TravelStack extends Stack {
 	) {
 		super(scope, id, props)
 
-		// cog, iden, db, api, file
-		const cognitoAuth = createTravelUserpool(this)
+		const cognitoAuth = createTravelUserpool(this, {
+			namingPrefix: `${context.appName}-${context.environment}`,
+		})
 		const travelDB = createTravelTable(this, {
 			tableName: `${context.appName}-${context.environment}`,
 		})
 		const travelAPI = createAppSyncAPI(this, {
+			namingPrefix: `${context.appName}-${context.environment}`,
 			identityPool: cognitoAuth.identityPool,
 			userpool: cognitoAuth.userPool,
 			travelpostTable: travelDB,
