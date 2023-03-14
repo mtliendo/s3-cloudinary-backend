@@ -9,7 +9,7 @@
 		"watch": "tsc -w",
 		"test": "jest",
 		"cdk": "cdk",
-		"list:output": "aws cloudformation describe-stacks --stack-name travel-viewer-app-stack-develop --query \"Stacks[].Outputs[0].OutputValue\"",
+		"list:output": "aws cloudformation describe-stacks --stack-name travel-viewer-app-stack-develop --query \"Stacks[].Outputs[]\"",
 		"deploy:all": "npx aws-cdk deploy --outputs-file ./output.json",
 		"whitelist:cloudinary": "touch focusotter-tuts && aws s3 cp focusotter-tuts s3://travel-viewer-app-develop-bucket/.wellknown/cloudinary/ && rm focusotter-tuts"
 	},
