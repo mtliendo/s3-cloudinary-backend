@@ -30,7 +30,7 @@ export class TravelStack extends Stack {
 			travelpostTable: travelDB,
 		})
 		const travelPicsBucket = createTravelPicsBucket(this, {
-			bucketName: `${context.appName}-${context.environment}`,
+			bucketName: `${context.appName}-${context.environment}-bucket`,
 			allowedOrigins: ['http://localhost:3000'],
 			authenticatedRole: cognitoAuth.identityPool.authenticatedRole,
 			unauthenticatedRole: cognitoAuth.identityPool.unauthenticatedRole,

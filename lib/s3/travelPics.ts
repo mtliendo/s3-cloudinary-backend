@@ -1,7 +1,6 @@
 import { Construct } from 'constructs'
 import * as s3 from 'aws-cdk-lib/aws-s3'
 import * as iam from 'aws-cdk-lib/aws-iam'
-import { CfnOutput } from 'aws-cdk-lib'
 
 type CreateTravelPicsBucketProps = {
 	allowedOrigins: [string]
@@ -14,7 +13,7 @@ export function createTravelPicsBucket(
 	scope: Construct,
 	props: CreateTravelPicsBucketProps
 ) {
-	const fileStorageBucket = new s3.Bucket(scope, 'SaaSImagesBucket', {
+	const fileStorageBucket = new s3.Bucket(scope, props.bucketName, {
 		bucketName: props.bucketName,
 		cors: [
 			{
