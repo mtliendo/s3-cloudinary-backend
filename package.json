@@ -11,7 +11,7 @@
 		"cdk": "cdk",
 		"list:output": "aws cloudformation describe-stacks --stack-name travel-viewer-app-stack-develop --query \"Stacks[].Outputs[0].OutputValue\"",
 		"deploy:all": "npx aws-cdk deploy --outputs-file ./output.json",
-		"whitelist:cloudinary": "touch focusotter-tuts && aws s3 cp focusotter-tuts s3://focus-otter-saas-images/.wellknown/cloudinary/ && rm focusotter-tuts"
+		"whitelist:cloudinary": "touch focusotter-tuts && aws s3 cp focusotter-tuts s3://travel-viewer-app-develop-bucket/.wellknown/cloudinary/ && rm focusotter-tuts"
 	},
 	"devDependencies": {
 		"@aws-appsync/utils": "^1.1.0",
