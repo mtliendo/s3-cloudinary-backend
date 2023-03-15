@@ -38,7 +38,7 @@ export class TravelStack extends Stack {
 		})
 
 		const amplifyApp = createNextJSHosting(this, {
-			appName: `${context.appName}-${context.environment}`,
+			appName: context.appName,
 			branchName: context.branchName,
 			githubOauthTokenName: context.githubOauthTokenName,
 			owner: context.repoOwner,
