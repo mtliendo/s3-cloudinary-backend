@@ -36,7 +36,6 @@ export function createNextJSHosting(
 				status: RedirectStatus.NOT_FOUND_REWRITE,
 			},
 		],
-		environmentVariables: props.environmentVariables,
 		buildSpec: codebuild.BuildSpec.fromObjectToYaml({
 			version: 1,
 			frontend: {
@@ -61,10 +60,12 @@ export function createNextJSHosting(
 
 	amplifyApp.addBranch('main', {
 		stage: 'PRODUCTION',
+		environmentVariables: props.environmentVariables,
 	})
 
 	amplifyApp.addBranch('develop', {
 		stage: 'DEVELOPMENT',
+		environmentVariables: props.environmentVariables,
 	})
 
 	//Drop down to L1 to allow new NextJS architecture
