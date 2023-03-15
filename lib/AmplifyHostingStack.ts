@@ -33,10 +33,8 @@ export class AmplifyHostingStack extends Stack {
 				identityPoolId: props.identitypoolId,
 				bucket: props.bucketName,
 				appSyncURL: props.appSyncAPIUrl,
-				NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
-					context.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-				NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER:
-					context.NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER,
+				NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: context.cloudinaryCloudName,
+				NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER: context.cloudinaryUploadFolder,
 			},
 		})
 

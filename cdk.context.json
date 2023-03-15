@@ -12,15 +12,15 @@
 			"environment": "develop",
 			"branchName": "develop",
 			"s3AllowedOrigins": ["*"],
-			"NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME": "focusotter-tuts",
-			"NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER": "travel-viewer-app-develop-bucket/public/"
+			"cloudinaryCloudName": "focusotter-tuts",
+			"cloudinaryUploadFolder": "travel-viewer-app-develop-bucket"
 		},
 		{
 			"environment": "production",
 			"branchName": "main",
 			"s3AllowedOrigins": ["*"],
-			"NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME": "focusotter-tuts",
-			"NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER": "travel-viewer-app-develop-bucket/public/"
+			"cloudinaryCloudName": "focusotter-tuts",
+			"cloudinaryUploadFolder": "travel-viewer-app-production-bucket"
 		}
 	]
 }
