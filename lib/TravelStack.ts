@@ -10,6 +10,11 @@ import { createTravelPicsBucket } from './s3/travelPics'
 type TravelStackProps = {}
 
 export class TravelStack extends Stack {
+	readonly userpoolClientId: string
+	readonly userpoolId: string
+	readonly identitypoolId: string
+	readonly bucketName: string
+	readonly appSyncAPIUrl: string
 	constructor(
 		scope: Construct,
 		id: string,
@@ -37,28 +42,13 @@ export class TravelStack extends Stack {
 			unauthenticatedRole: cognitoAuth.identityPool.unauthenticatedRole,
 		})
 
-		const amplifyApp = createNextJSHosting(this, {
-			appName: context.appName,
-			branchName: context.branchName,
-			githubOauthTokenName: context.githubOauthTokenName,
-			owner: context.repoOwner,
-			repository: context.repoName,
-			environmentVariables: {
-				region: context.region,
-				userpoolId: cognitoAuth.userPool.userPoolId,
-				userPoolWebClientId: cognitoAuth.userPoolClient.userPoolClientId,
-				identityPoolId: cognitoAuth.identityPool.identityPoolId,
-				bucket: travelPicsBucket.bucketName,
-				appSyncURL: travelAPI.graphqlUrl,
-				NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
-					context.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-				NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER:
-					context.NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER,
-			},
-		})
+		this.userpoolClientId = cognitoAuth.userPoolClient.userPoolClientId
+		this.userpoolId = cognitoAuth.userPool.userPoolId
+		this.identitypoolId = cognitoAuth.identityPool.identityPoolId
+		this.bucketName = travelPicsBucket.bucketName
+		this.appSyncAPIUrl = travelAPI.graphqlUrl
 
 		new CfnOutput(this, 'region', { value: context.region })
-		new CfnOutput(this, 'appID', { value: amplifyApp.appId })
 		new CfnOutput(this, 'userpoolId', {
 			value: cognitoAuth.userPool.userPoolId,
 		})
