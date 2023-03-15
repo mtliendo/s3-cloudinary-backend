@@ -46,8 +46,8 @@ export function createNextJSHosting(
 					},
 					build: {
 						commands: [
-							'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME \
-							NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER=$NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER \
+							'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$cloudinaryCloudName \
+							NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER=$cloudinaryUploadFolder \
 							NEXT_PUBLIC_appSyncURL=$appSyncURL \
 							NEXT_PUBLIC_bucket=$bucket \
 							NEXT_PUBLIC_identityPoolId=$identityPoolId \
