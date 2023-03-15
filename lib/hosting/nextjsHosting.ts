@@ -46,15 +46,15 @@ export function createNextJSHosting(
 					},
 					build: {
 						commands: [
-							'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME',
-							'NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER=$NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER',
-							'NEXT_PUBLIC_appSyncURL=$appSyncURL',
-							'NEXT_PUBLIC_bucket=$bucket',
-							'NEXT_PUBLIC_identityPoolId=$identityPoolId',
-							'NEXT_PUBLIC_region=$region',
-							'NEXT_PUBLIC_userPoolWebClientId=$userPoolWebClientId',
-							'NEXT_PUBLIC_userpoolId=$userpoolId',
-							'npm run build',
+							'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME \
+							NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER=$NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER \
+							NEXT_PUBLIC_appSyncURL=$appSyncURL \
+							NEXT_PUBLIC_bucket=$bucket \
+							NEXT_PUBLIC_identityPoolId=$identityPoolId \
+							NEXT_PUBLIC_region=$region \
+							NEXT_PUBLIC_userPoolWebClientId=$userPoolWebClientId \
+							NEXT_PUBLIC_userpoolId=$userpoolId \
+							npm run build',
 						],
 					},
 				},
