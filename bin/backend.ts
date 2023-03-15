@@ -18,6 +18,9 @@ initStack().then(({ app, stackNameWithEnv, stackProps, context }) => {
 		app,
 		`${context.appName}-stack`,
 		{
+			env: {
+				region: context.region,
+			},
 			userpoolClientId: travelStack.userpoolClientId,
 			userpoolId: travelStack.userpoolId,
 			identitypoolId: travelStack.identitypoolId,
