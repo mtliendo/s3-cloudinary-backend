@@ -66,7 +66,6 @@ export function createNextJSHosting(
 	if (props.branchName === 'main' && props.environmentVariables) {
 		Object.entries(props.environmentVariables).forEach(([key, val]) => {
 			prodBranch.addEnvironment(key, val)
-			console.log(key, val)
 		})
 	}
 
