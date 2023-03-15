@@ -21,7 +21,7 @@ export function createNextJSHosting(
 	scope: Construct,
 	props: NextJSHostingProps
 ): App {
-	const amplifyApp = new App(scope, 'ProductViewer', {
+	const amplifyApp = new App(scope, 'TravelAmplifyApp', {
 		appName: props.appName,
 		sourceCodeProvider: new GitHubSourceCodeProvider({
 			owner: props.owner,
@@ -59,8 +59,12 @@ export function createNextJSHosting(
 		}),
 	})
 
-	amplifyApp.addBranch(props.branchName, {
-		stage: props.branchName === 'main' ? 'PRODUCTION' : props.branchName,
+	amplifyApp.addBranch('main', {
+		stage: 'PRODUCTION',
+	})
+
+	amplifyApp.addBranch('develop', {
+		stage: 'develop',
 	})
 
 	//Drop down to L1 to allow new NextJS architecture
