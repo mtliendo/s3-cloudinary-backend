@@ -9,8 +9,9 @@
 		"watch": "tsc -w",
 		"test": "jest",
 		"cdk": "cdk",
-		"deploy:all": "npx aws-cdk deploy --outputs-file ./output.json",
-		"whitelist:cloudinary": "touch focusotter-tuts && aws s3 cp focusotter-tuts s3://focus-otter-saas-images/.wellknown/cloudinary/ && rm focusotter-tuts"
+		"create:githubSecret": "aws secretsmanager create-secret --name GH_TOKEN --secret-string \"$GH_SECRET\"",
+		"list:output": "aws cloudformation describe-stacks --stack-name \"$STACK_NAME\" --query \"Stacks[].Outputs[]\"",
+		"whitelist:cloudinary": "touch \"$CLDNRY_ENV\" && aws s3 cp \"$CLDNRY_ENV\" \"s3://$BUCKET_NAME/.wellknown/cloudinary/\" && rm \"$CLDNRY_ENV\""
 	},
 	"devDependencies": {
 		"@aws-appsync/utils": "^1.1.0",
@@ -25,6 +26,7 @@
 		"typescript": "~4.9.5"
 	},
 	"dependencies": {
+		"@aws-cdk/aws-amplify-alpha": "^2.67.0-alpha.0",
 		"@aws-cdk/aws-cognito-identitypool-alpha": "^2.67.0-alpha.0",
 		"aws-cdk-lib": "2.67.0",
 		"constructs": "^10.0.0",
