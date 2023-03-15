@@ -14,7 +14,7 @@ type NextJSHostingProps = {
 	repository: string
 	branchName: string
 	githubOauthTokenName: string
-	environmentVariables?: { [name: string]: string }
+	environmentVariables?: { [s: string]: string }
 }
 
 export function createNextJSHosting(
@@ -29,6 +29,7 @@ export function createNextJSHosting(
 			oauthToken: SecretValue.secretsManager(props.githubOauthTokenName),
 		}),
 		autoBranchDeletion: true,
+		environmentVariables: props.environmentVariables,
 		customRules: [
 			{
 				source: '/<*>',
@@ -58,14 +59,19 @@ export function createNextJSHosting(
 		}),
 	})
 
-	amplifyApp.addBranch('main', {
+	const prodBranch = amplifyApp.addBranch('main', {
 		stage: 'PRODUCTION',
-		environmentVariables: props.environmentVariables,
 	})
+
+	if (props.branchName === 'main' && props.environmentVariables) {
+		Object.entries(props.environmentVariables).forEach(([key, val]) => {
+			prodBranch.addEnvironment(key, val)
+			console.log(key, val)
+		})
+	}
 
 	amplifyApp.addBranch('develop', {
 		stage: 'DEVELOPMENT',
-		environmentVariables: props.environmentVariables,
 	})
 
 	//Drop down to L1 to allow new NextJS architecture
