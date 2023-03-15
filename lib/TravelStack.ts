@@ -50,6 +50,10 @@ export class TravelStack extends Stack {
 				identityPoolId: cognitoAuth.identityPool.identityPoolId,
 				bucket: travelPicsBucket.bucketName,
 				appSyncURL: travelAPI.graphqlUrl,
+				NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
+					context.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+				NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER:
+					context.NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER,
 			},
 		})
 
