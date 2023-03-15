@@ -29,7 +29,6 @@ export function createNextJSHosting(
 			oauthToken: SecretValue.secretsManager(props.githubOauthTokenName),
 		}),
 		autoBranchDeletion: true,
-		environmentVariables: props.environmentVariables,
 		customRules: [
 			{
 				source: '/<*>',
@@ -63,15 +62,21 @@ export function createNextJSHosting(
 		stage: 'PRODUCTION',
 	})
 
+	const devBranch = amplifyApp.addBranch('develop', {
+		stage: 'DEVELOPMENT',
+	})
+
 	if (props.branchName === 'main' && props.environmentVariables) {
 		Object.entries(props.environmentVariables).forEach(([key, val]) => {
 			prodBranch.addEnvironment(key, val)
 		})
 	}
 
-	amplifyApp.addBranch('develop', {
-		stage: 'DEVELOPMENT',
-	})
+	if (props.branchName === 'develop' && props.environmentVariables) {
+		Object.entries(props.environmentVariables).forEach(([key, val]) => {
+			devBranch.addEnvironment(key, val)
+		})
+	}
 
 	//Drop down to L1 to allow new NextJS architecture
 	const cfnAmplifyApp = amplifyApp.node.defaultChild as CfnApp
