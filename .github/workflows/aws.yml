@@ -1,7 +1,17 @@
-on: [push, workflow_dispatch]
+name: Deploy CDK Project
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
 
 jobs:
   aws_cdk:
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
