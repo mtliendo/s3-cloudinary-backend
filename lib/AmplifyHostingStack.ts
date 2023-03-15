@@ -1,7 +1,4 @@
-import { IdentityPool } from '@aws-cdk/aws-cognito-identitypool-alpha'
 import { CfnOutput, Stack, StackProps } from 'aws-cdk-lib'
-import { UserPool, UserPoolClient } from 'aws-cdk-lib/aws-cognito'
-import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { Construct } from 'constructs'
 import { CDKContext } from '../types'
 import { createNextJSHosting } from './hosting/nextjsHosting'
