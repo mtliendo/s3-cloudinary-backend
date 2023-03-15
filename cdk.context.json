@@ -11,19 +11,16 @@
 		{
 			"environment": "develop",
 			"branchName": "develop",
-			"s3AllowedOrigins": [
-				"http://localhost:3000",
-				"https://develop.d2fxjt6yy0vcig.amplifyapp.com"
-			],
-			"NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME": "focusotter-tuts",
-			"NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER": "travel-viewer-app-develop-bucket/public/"
+			"s3AllowedOrigins": ["*"],
+			"cloudinaryCloudName": "focusotter-tuts",
+			"cloudinaryUploadFolder": "travel-viewer-app-develop-bucket"
 		},
 		{
 			"environment": "production",
 			"branchName": "main",
-			"s3AllowedOrigins": ["https://main.d2fxjt6yy0vcig.amplifyapp.com"],
-			"NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME": "focusotter-tuts",
-			"NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER": "travel-viewer-app-develop-bucket/public/"
+			"s3AllowedOrigins": ["*"],
+			"cloudinaryCloudName": "focusotter-tuts",
+			"cloudinaryUploadFolder": "travel-viewer-app-production-bucket"
 		}
 	]
 }

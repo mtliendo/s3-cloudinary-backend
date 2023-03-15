@@ -4,7 +4,6 @@ import { CDKContext } from '../types'
 import { createAppSyncAPI } from './api/appsync'
 import { createTravelUserpool } from './cognito/auth'
 import { createTravelTable } from './database/travelTable'
-import { createNextJSHosting } from './hosting/nextjsHosting'
 import { createTravelPicsBucket } from './s3/travelPics'
 
 type TravelStackProps = {}
