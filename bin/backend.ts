@@ -16,7 +16,7 @@ initStack().then(({ app, stackNameWithEnv, stackProps, context }) => {
 
 	const amplifyHostingStack = new AmplifyHostingStack(
 		app,
-		`${context.appName}-stack`,
+		`${context.appName}-hosting-stack`,
 		{
 			env: {
 				region: context.region,
