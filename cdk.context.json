@@ -2,7 +2,10 @@
 	"globals": {
 		"appName": "travel-viewer-app",
 		"region": "us-east-1",
-		"appDescription": "A stack for a Travel pic viewer"
+		"appDescription": "A stack for a Travel pic viewer",
+		"repoOwner": "mtliendo",
+		"repoName": "s3-cloudinary-frontend",
+		"githubOauthTokenName": "GH_TOKEN"
 	},
 	"environments": [
 		{

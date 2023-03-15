@@ -5,4 +5,7 @@ export type CDKContext = {
 	environment: string
 	branchName: string
 	s3AllowedOrigins: [string]
+	repoOwner: string
+	repoName: string
+	githubOauthTokenName: string
 }

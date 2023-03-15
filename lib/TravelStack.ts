@@ -4,6 +4,7 @@ import { CDKContext } from '../types'
 import { createAppSyncAPI } from './api/appsync'
 import { createTravelUserpool } from './cognito/auth'
 import { createTravelTable } from './database/travelTable'
+import { createNextJSHosting } from './hosting/nextjsHosting'
 import { createTravelPicsBucket } from './s3/travelPics'
 
 type TravelStackProps = {}
@@ -35,7 +36,25 @@ export class TravelStack extends Stack {
 			authenticatedRole: cognitoAuth.identityPool.authenticatedRole,
 			unauthenticatedRole: cognitoAuth.identityPool.unauthenticatedRole,
 		})
+
+		const amplifyApp = createNextJSHosting(this, {
+			appName: `${context.appName}-${context.environment}`,
+			branchName: context.branchName,
+			githubOauthTokenName: context.githubOauthTokenName,
+			owner: context.repoOwner,
+			repository: context.repoName,
+			environmentVariables: {
+				region: context.region,
+				userpoolId: cognitoAuth.userPool.userPoolId,
+				userPoolWebClientId: cognitoAuth.userPoolClient.userPoolClientId,
+				identityPoolId: cognitoAuth.identityPool.identityPoolId,
+				bucket: travelPicsBucket.bucketName,
+				aws_appsync_graphqlEndpoint: travelAPI.graphqlUrl,
+			},
+		})
+
 		new CfnOutput(this, 'region', { value: context.region })
+		new CfnOutput(this, 'appID', { value: amplifyApp.appId })
 		new CfnOutput(this, 'userpoolId', {
 			value: cognitoAuth.userPool.userPoolId,
 		})
@@ -49,26 +68,5 @@ export class TravelStack extends Stack {
 		new CfnOutput(this, 'aws_appsync_graphqlEndpoint', {
 			value: travelAPI.graphqlUrl,
 		})
-
-		// amplify config sample
-		// {
-		// 			aws_project_region: context.region,
-		// 			Auth: {
-		// 				region: context.region,
-		// 				userPoolId: cognitoAuth.userPool.userPoolId,
-		// 				userPoolWebClientId: cognitoAuth.userPoolClient.userPoolClientId,
-		// 				identityPoolId: cognitoAuth.identityPool.identityPoolId,
-		// 			},
-		// 			Storage: {
-		// 				AWSS3: {
-		// 					bucket: travelPicsBucket.bucketName,
-		// 					region: context.region,
-		// 				},
-		// 			},
-		// 			aws_appsync_graphqlEndpoint: travelAPI.graphqlUrl,
-		// 			aws_appsync_region: context.region,
-		// 			aws_appsync_authenticationType: 'AMAZON_COGNITO_USER_POOLS',
-		// 		}
-		// }
 	}
 }
