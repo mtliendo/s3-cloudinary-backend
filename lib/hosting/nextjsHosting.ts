@@ -45,7 +45,17 @@ export function createNextJSHosting(
 						commands: ['npm ci'],
 					},
 					build: {
-						commands: ['npm run build'],
+						commands: [
+							'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = $NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME',
+							'NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER = $NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER',
+							'appSyncURL = $appSyncURL',
+							'bucket = $bucket',
+							'identityPoolId = $identityPoolId',
+							'region = $region',
+							'userPoolWebClientId = $userPoolWebClientId',
+							'userpoolId = $userpoolId',
+							'npm run build',
+						],
 					},
 				},
 				artifacts: {
