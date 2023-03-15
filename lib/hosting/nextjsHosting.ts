@@ -64,7 +64,7 @@ export function createNextJSHosting(
 	})
 
 	amplifyApp.addBranch('develop', {
-		stage: 'develop',
+		stage: 'DEVELOPMENT',
 	})
 
 	//Drop down to L1 to allow new NextJS architecture
