@@ -49,7 +49,7 @@ export class TravelStack extends Stack {
 				userPoolWebClientId: cognitoAuth.userPoolClient.userPoolClientId,
 				identityPoolId: cognitoAuth.identityPool.identityPoolId,
 				bucket: travelPicsBucket.bucketName,
-				aws_appsync_graphqlEndpoint: travelAPI.graphqlUrl,
+				appSyncURL: travelAPI.graphqlUrl,
 			},
 		})
 
