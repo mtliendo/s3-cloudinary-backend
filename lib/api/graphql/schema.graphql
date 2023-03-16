@@ -17,9 +17,11 @@ type Subscription {
 
 type TravelPost @aws_cognito_user_pools @aws_iam {
 	id: ID!
-	title: String
-	description: String
-	imgKey: String
+	createdAt: AWSDateTime!
+	updatedAt: AWSDateTime!
+	title: String!
+	description: String!
+	imgKey: String!
 }
 
 input TravelPostCreateInput {
