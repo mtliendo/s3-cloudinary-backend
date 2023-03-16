@@ -157,7 +157,7 @@ export function createAppSyncAPI(scope: Construct, props: AppSyncAPIProps) {
 
 	new awsAppsync.Resolver(scope, 'deleteTravelPostPipelineResolver', {
 		api,
-		typeName: 'Query',
+		typeName: 'Mutation',
 		fieldName: 'deleteTravelPost',
 		code: awsAppsync.Code.fromInline(passThroughSteps),
 		runtime: awsAppsync.FunctionRuntime.JS_1_0_0,
