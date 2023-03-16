@@ -1,6 +1,6 @@
 import { CfnOutput, Stack, StackProps } from 'aws-cdk-lib'
 import { Construct } from 'constructs'
-import { CDKContext } from '../types'
+import { CDKContext } from '../cdkcontext'
 import { createNextJSHosting } from './hosting/nextjsHosting'
 
 type AmplifyHostingStackProps = StackProps & {
