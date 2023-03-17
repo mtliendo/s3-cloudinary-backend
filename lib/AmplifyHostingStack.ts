@@ -9,6 +9,7 @@ type AmplifyHostingStackProps = StackProps & {
 	userpoolClientId: string
 	bucketName: string
 	appSyncAPIUrl: string
+	appSyncAPIId: string
 }
 
 export class AmplifyHostingStack extends Stack {
@@ -26,8 +27,9 @@ export class AmplifyHostingStack extends Stack {
 			githubOauthTokenName: context.githubOauthTokenName,
 			owner: context.repoOwner,
 			repository: context.repoName,
+			environment: context.environment,
+			appSyncAPIId: props.appSyncAPIId,
 			environmentVariables: {
-				environment: context.environment,
 				region: context.region,
 				userpoolId: props.userpoolId,
 				userPoolWebClientId: props.userpoolClientId,

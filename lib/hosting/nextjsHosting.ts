@@ -23,7 +23,9 @@ type NextJSHostingProps = {
 	repository: string
 	branchName: string
 	githubOauthTokenName: string
+	environment: string
 	environmentVariables: { [s: string]: string }
+	appSyncAPIId: string
 }
 
 export function createNextJSHosting(
@@ -32,7 +34,7 @@ export function createNextJSHosting(
 ): App {
 	const deployRole = new Role(
 		scope,
-		`TravelAmplifyAppRole-${props.environmentVariables.environment}`,
+		`TravelAmplifyAppRole-${props.environment}`,
 		{
 			assumedBy: new ServicePrincipal('amplify.amazonaws.com'),
 			inlinePolicies: {
@@ -41,9 +43,7 @@ export function createNextJSHosting(
 						new PolicyStatement({
 							effect: Effect.ALLOW,
 							actions: ['appsync:GetGraphqlApi'],
-							resources: [
-								'arn:aws:appsync:us-east-1:311853295989:apis/tfree3uifrfdtjuxkrb5awcj5m',
-							],
+							resources: [`arn:aws:appsync:::apis/${props.appSyncAPIId}`],
 						}),
 					],
 				}),
