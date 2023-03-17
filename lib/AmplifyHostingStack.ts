@@ -39,6 +39,8 @@ export class AmplifyHostingStack extends Stack {
 			},
 		})
 
+		amplifyApp
+
 		new CfnOutput(this, 'apiId', { value: amplifyApp.appId })
 	}
 }

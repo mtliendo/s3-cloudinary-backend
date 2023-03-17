@@ -35,6 +35,19 @@ export function createNextJSHosting(
 		`TravelAmplifyAppRole-${props.environmentVariables.environment}`,
 		{
 			assumedBy: new ServicePrincipal('amplify.amazonaws.com'),
+			inlinePolicies: {
+				allowAppSync: new PolicyDocument({
+					statements: [
+						new PolicyStatement({
+							effect: Effect.ALLOW,
+							actions: ['appsync:GetGraphqlApi'],
+							resources: [
+								'arn:aws:appsync:us-east-1:311853295989:apis/tfree3uifrfdtjuxkrb5awcj5m',
+							],
+						}),
+					],
+				}),
+			},
 		}
 	)
 	// Attach an existing managed policy to the new IAM role
