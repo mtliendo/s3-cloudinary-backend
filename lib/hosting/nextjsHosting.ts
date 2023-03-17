@@ -10,6 +10,7 @@ import {
 import { CfnApp } from 'aws-cdk-lib/aws-amplify'
 import {
 	Effect,
+	ManagedPolicy,
 	PolicyDocument,
 	PolicyStatement,
 	Role,
@@ -33,21 +34,15 @@ export function createNextJSHosting(
 		scope,
 		`TravelAmplifyAppRole-${props.environmentVariables.environment}`,
 		{
-			roleName: `TravelAmplifyAppRole-${props.environmentVariables.environment}`,
 			assumedBy: new ServicePrincipal('amplify.amazonaws.com'),
-			inlinePolicies: {
-				getAppSyncApi: new PolicyDocument({
-					statements: [
-						new PolicyStatement({
-							effect: Effect.ALLOW,
-							actions: ['appsync:GetGraphqlApi'],
-							resources: [`arn:aws:appsync:::apis/*`],
-						}),
-					],
-				}),
-			},
 		}
 	)
+	// Attach an existing managed policy to the new IAM role
+	const managedPolicy = ManagedPolicy.fromAwsManagedPolicyName(
+		'AdministratorAccess-Amplify'
+	)
+	deployRole.addManagedPolicy(managedPolicy)
+
 	const amplifyApp = new App(scope, 'TravelAmplifyApp', {
 		appName: props.appName,
 		role: deployRole,
