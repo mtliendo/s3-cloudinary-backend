@@ -78,7 +78,7 @@ export function createNextJSHosting(
 					},
 					build: {
 						commands: [
-							`aws appsync get-introspection-schema --api-id ${props.appSyncAPIId} --format JSON schema.json &&\
+							`aws appsync get-introspection-schema --api-id ${props.appSyncAPIId} --format SDL schema.graphql &&\
 							npx @aws-amplify/cli codegen`,
 
 							'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$cloudinaryCloudName \
