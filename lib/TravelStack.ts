@@ -14,6 +14,7 @@ export class TravelStack extends Stack {
 	readonly identitypoolId: string
 	readonly bucketName: string
 	readonly appSyncAPIUrl: string
+	readonly appSyncAPIId: string
 	constructor(
 		scope: Construct,
 		id: string,
@@ -46,6 +47,7 @@ export class TravelStack extends Stack {
 		this.identitypoolId = cognitoAuth.identityPool.identityPoolId
 		this.bucketName = travelPicsBucket.bucketName
 		this.appSyncAPIUrl = travelAPI.graphqlUrl
+		this.appSyncAPIId = travelAPI.apiId
 
 		new CfnOutput(this, 'region', { value: context.region })
 		new CfnOutput(this, 'userpoolId', {

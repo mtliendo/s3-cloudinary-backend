@@ -31,6 +31,7 @@ const amplifyHostingStack = new AmplifyHostingStack(
 		identitypoolId: travelStack.identitypoolId,
 		bucketName: travelStack.bucketName,
 		appSyncAPIUrl: travelStack.appSyncAPIUrl,
+		appSyncAPIId: travelStack.appSyncAPIId,
 	},
 	context
 )

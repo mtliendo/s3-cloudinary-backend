@@ -8,6 +8,14 @@ import {
 	RedirectStatus,
 } from '@aws-cdk/aws-amplify-alpha'
 import { CfnApp } from 'aws-cdk-lib/aws-amplify'
+import {
+	Effect,
+	ManagedPolicy,
+	PolicyDocument,
+	PolicyStatement,
+	Role,
+	ServicePrincipal,
+} from 'aws-cdk-lib/aws-iam'
 
 type NextJSHostingProps = {
 	owner: string
@@ -15,15 +23,43 @@ type NextJSHostingProps = {
 	repository: string
 	branchName: string
 	githubOauthTokenName: string
+	environment: string
 	environmentVariables: { [s: string]: string }
+	appSyncAPIId: string
 }
 
 export function createNextJSHosting(
 	scope: Construct,
 	props: NextJSHostingProps
 ): App {
+	const deployRole = new Role(
+		scope,
+		`TravelAmplifyAppRole-${props.environment}`,
+		{
+			assumedBy: new ServicePrincipal('amplify.amazonaws.com'),
+			inlinePolicies: {
+				allowAppSync: new PolicyDocument({
+					statements: [
+						new PolicyStatement({
+							effect: Effect.ALLOW,
+							actions: ['appsync:GetGraphqlApi'],
+							resources: [`arn:aws:appsync:::apis/${props.appSyncAPIId}`],
+						}),
+					],
+				}),
+			},
+		}
+	)
+	// The default role for Amplify Managed apps.
+	// This lets you call `GetGraphqlApi` but only via CloudFormation, not the build environment
+	const managedPolicy = ManagedPolicy.fromAwsManagedPolicyName(
+		'AdministratorAccess-Amplify'
+	)
+	deployRole.addManagedPolicy(managedPolicy)
+
 	const amplifyApp = new App(scope, 'TravelAmplifyApp', {
 		appName: props.appName,
+		role: deployRole,
 		sourceCodeProvider: new GitHubSourceCodeProvider({
 			owner: props.owner,
 			repository: props.repository,
@@ -46,6 +82,10 @@ export function createNextJSHosting(
 					},
 					build: {
 						commands: [
+							'APPSYNC_ID=$(aws appsync get-graphql-api --api-id tfree3uifrfdtjuxkrb5awcj5m --query "graphqlApi.apiId") &&\
+							aws appsync get-introspection-schema --api-id $APPSYNC_ID --format json schema.json &&\
+							npx @aws-amplify/cli codegen',
+
 							'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$cloudinaryCloudName \
 							NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER=$cloudinaryUploadFolder \
 							NEXT_PUBLIC_appSyncURL=$appSyncURL \
@@ -71,7 +111,6 @@ export function createNextJSHosting(
 
 	const prodBranch = amplifyApp.addBranch('main', {
 		stage: 'PRODUCTION',
-		pullRequestPreview: true,
 	})
 
 	const devBranch = amplifyApp.addBranch('develop', {

@@ -9,6 +9,7 @@ type AmplifyHostingStackProps = StackProps & {
 	userpoolClientId: string
 	bucketName: string
 	appSyncAPIUrl: string
+	appSyncAPIId: string
 }
 
 export class AmplifyHostingStack extends Stack {
@@ -26,6 +27,8 @@ export class AmplifyHostingStack extends Stack {
 			githubOauthTokenName: context.githubOauthTokenName,
 			owner: context.repoOwner,
 			repository: context.repoName,
+			environment: context.environment,
+			appSyncAPIId: props.appSyncAPIId,
 			environmentVariables: {
 				region: context.region,
 				userpoolId: props.userpoolId,
@@ -37,6 +40,8 @@ export class AmplifyHostingStack extends Stack {
 				cloudinaryUploadFolder: context.cloudinaryUploadFolder,
 			},
 		})
+
+		amplifyApp
 
 		new CfnOutput(this, 'apiId', { value: amplifyApp.appId })
 	}

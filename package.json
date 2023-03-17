@@ -9,6 +9,7 @@
 		"watch": "tsc -w",
 		"test": "jest",
 		"cdk": "cdk",
+		"create:webhook": "aws amplify create-webhook --app-id d17yrtoi3kgfmk --branch-name \"$BRANCH_NAME\"",
 		"create:githubSecret": "aws secretsmanager create-secret --name GH_TOKEN --secret-string \"$GH_SECRET\"",
 		"list:output": "aws cloudformation describe-stacks --stack-name \"$STACK_NAME\" --query \"Stacks[].Outputs[]\"",
 		"whitelist:cloudinary": "touch \"$CLDNRY_ENV\" && aws s3 cp \"$CLDNRY_ENV\" \"s3://$BUCKET_NAME/.wellknown/cloudinary/\" && rm \"$CLDNRY_ENV\""
