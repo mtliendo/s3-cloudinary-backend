@@ -39,7 +39,10 @@ export function createNextJSHosting(
 				statements: [
 					new PolicyStatement({
 						effect: Effect.ALLOW,
-						actions: ['appsync:GetGraphqlApi'],
+						actions: [
+							'appsync:GetGraphqlApi',
+							'appsync:GetIntrospectionSchema',
+						],
 						resources: [`arn:aws:appsync:::apis/*`],
 					}),
 				],
