@@ -50,7 +50,8 @@ export function createNextJSHosting(
 			},
 		}
 	)
-	// Attach an existing managed policy to the new IAM role
+	// The default role for Amplify Managed apps.
+	// This lets you call `GetGraphqlApi` but only via CloudFormation, not the build environment
 	const managedPolicy = ManagedPolicy.fromAwsManagedPolicyName(
 		'AdministratorAccess-Amplify'
 	)
@@ -77,14 +78,14 @@ export function createNextJSHosting(
 			frontend: {
 				phases: {
 					preBuild: {
-						commands: [
-							'echo HELLOOOOO',
-							'aws appsync get-graphql-api --api-id tfree3uifrfdtjuxkrb5awcj5m --query "graphqlApi.apiId"',
-							'npm ci',
-						],
+						commands: ['npm ci'],
 					},
 					build: {
 						commands: [
+							'APPSYNC_ID=$(aws appsync get-graphql-api --api-id tfree3uifrfdtjuxkrb5awcj5m --query "graphqlApi.apiId") &&\
+							aws appsync get-introspection-schema --api-id $APPSYNC_ID --format json schema.json &&\
+							npx @aws-amplify/cli codegen',
+
 							'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$cloudinaryCloudName \
 							NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER=$cloudinaryUploadFolder \
 							NEXT_PUBLIC_appSyncURL=$appSyncURL \
