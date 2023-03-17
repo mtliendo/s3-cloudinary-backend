@@ -8,6 +8,13 @@ import {
 	RedirectStatus,
 } from '@aws-cdk/aws-amplify-alpha'
 import { CfnApp } from 'aws-cdk-lib/aws-amplify'
+import {
+	Effect,
+	PolicyDocument,
+	PolicyStatement,
+	Role,
+	ServicePrincipal,
+} from 'aws-cdk-lib/aws-iam'
 
 type NextJSHostingProps = {
 	owner: string
@@ -22,8 +29,28 @@ export function createNextJSHosting(
 	scope: Construct,
 	props: NextJSHostingProps
 ): App {
+	const deployRole = new Role(
+		scope,
+		`TravelAmplifyAppRole-${props.environmentVariables.environment}`,
+		{
+			roleName: `TravelAmplifyAppRole-${props.environmentVariables.environment}`,
+			assumedBy: new ServicePrincipal('amplify.amazonaws.com'),
+			inlinePolicies: {
+				getAppSyncApi: new PolicyDocument({
+					statements: [
+						new PolicyStatement({
+							effect: Effect.ALLOW,
+							actions: ['appsync:GetGraphqlApi'],
+							resources: [`arn:aws:appsync:::apis/*`],
+						}),
+					],
+				}),
+			},
+		}
+	)
 	const amplifyApp = new App(scope, 'TravelAmplifyApp', {
 		appName: props.appName,
+		role: deployRole,
 		sourceCodeProvider: new GitHubSourceCodeProvider({
 			owner: props.owner,
 			repository: props.repository,

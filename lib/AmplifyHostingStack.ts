@@ -27,6 +27,7 @@ export class AmplifyHostingStack extends Stack {
 			owner: context.repoOwner,
 			repository: context.repoName,
 			environmentVariables: {
+				environment: context.environment,
 				region: context.region,
 				userpoolId: props.userpoolId,
 				userPoolWebClientId: props.userpoolClientId,
