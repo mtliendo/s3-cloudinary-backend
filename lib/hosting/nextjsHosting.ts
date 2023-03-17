@@ -82,9 +82,9 @@ export function createNextJSHosting(
 					},
 					build: {
 						commands: [
-							'APPSYNC_ID=$(aws appsync get-graphql-api --api-id tfree3uifrfdtjuxkrb5awcj5m --query "graphqlApi.apiId") &&\
+							`APPSYNC_ID=$(aws appsync get-graphql-api --api-id ${props.appSyncAPIId} --query "graphqlApi.apiId") &&\
 							aws appsync get-introspection-schema --api-id $APPSYNC_ID --format json schema.json &&\
-							npx @aws-amplify/cli codegen',
+							npx @aws-amplify/cli codegen`,
 
 							'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$cloudinaryCloudName \
 							NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER=$cloudinaryUploadFolder \
@@ -133,6 +133,7 @@ export function createNextJSHosting(
 
 	//Drop down to L1 to allow new NextJS architecture
 	const cfnAmplifyApp = amplifyApp.node.defaultChild as CfnApp
+
 	cfnAmplifyApp.platform = 'WEB_COMPUTE'
 
 	return amplifyApp
