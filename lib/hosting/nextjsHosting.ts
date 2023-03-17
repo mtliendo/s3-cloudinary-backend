@@ -32,24 +32,20 @@ export function createNextJSHosting(
 	scope: Construct,
 	props: NextJSHostingProps
 ): App {
-	const deployRole = new Role(
-		scope,
-		`TravelAmplifyAppRole-${props.environment}`,
-		{
-			assumedBy: new ServicePrincipal('amplify.amazonaws.com'),
-			inlinePolicies: {
-				allowAppSync: new PolicyDocument({
-					statements: [
-						new PolicyStatement({
-							effect: Effect.ALLOW,
-							actions: ['appsync:GetGraphqlApi'],
-							resources: [`arn:aws:appsync:::apis/${props.appSyncAPIId}`],
-						}),
-					],
-				}),
-			},
-		}
-	)
+	const deployRole = new Role(scope, `TravelAmplifyAppRole`, {
+		assumedBy: new ServicePrincipal('amplify.amazonaws.com'),
+		inlinePolicies: {
+			allowAppSync: new PolicyDocument({
+				statements: [
+					new PolicyStatement({
+						effect: Effect.ALLOW,
+						actions: ['appsync:GetGraphqlApi'],
+						resources: [`arn:aws:appsync:::apis/*`],
+					}),
+				],
+			}),
+		},
+	})
 	// The default role for Amplify Managed apps.
 	// This lets you call `GetGraphqlApi` but only via CloudFormation, not the build environment
 	const managedPolicy = ManagedPolicy.fromAwsManagedPolicyName(
