@@ -42,7 +42,11 @@ export function createNextJSHosting(
 			frontend: {
 				phases: {
 					preBuild: {
-						commands: ['npm ci'],
+						commands: [
+							'echo HELLOOOOO',
+							'aws appsync get-graphql-api --api-id tfree3uifrfdtjuxkrb5awcj5m --query "graphqlApi.apiId"',
+							'npm ci',
+						],
 					},
 					build: {
 						commands: [
