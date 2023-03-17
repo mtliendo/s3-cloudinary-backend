@@ -33,7 +33,7 @@ export function createNextJSHosting(
 		scope,
 		`TravelAmplifyAppRole-${props.environmentVariables.environment}`,
 		{
-			roleName: `TravelAmplifyAppRole-${props.environmentVariables.environment}/BuildSession`,
+			roleName: `TravelAmplifyAppRole-${props.environmentVariables.environment}`,
 			assumedBy: new ServicePrincipal('amplify.amazonaws.com'),
 			inlinePolicies: {
 				getAppSyncApi: new PolicyDocument({
