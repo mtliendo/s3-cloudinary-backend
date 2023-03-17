@@ -4,7 +4,11 @@ type Query {
 }
 
 type Mutation {
-	createTravelPost(input: TravelPostInput!): TravelPost @aws_cognito_user_pools
+	createTravelPost(input: TravelPostCreateInput!): TravelPost
+		@aws_cognito_user_pools
+	updateTravelPost(input: TravelPostUpdateInput!): TravelPost
+		@aws_cognito_user_pools
+	deleteTravelPost(id: ID!): TravelPost @aws_cognito_user_pools
 }
 
 type Subscription {
@@ -13,13 +17,22 @@ type Subscription {
 
 type TravelPost @aws_cognito_user_pools @aws_iam {
 	id: ID!
-	title: String
-	description: String
-	imgKey: String
+	createdAt: AWSDateTime!
+	updatedAt: AWSDateTime!
+	title: String!
+	description: String!
+	imgKey: String!
 }
 
-input TravelPostInput {
+input TravelPostCreateInput {
 	id: ID
+	title: String!
+	description: String
+	imgKey: String!
+}
+
+input TravelPostUpdateInput {
+	id: ID! # as opposed to creating, an ID is required
 	title: String!
 	description: String
 	imgKey: String!

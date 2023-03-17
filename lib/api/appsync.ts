@@ -46,6 +46,20 @@ export function createAppSyncAPI(scope: Construct, props: AppSyncAPIProps) {
 		'listTravelPosts'
 	)
 
+	const createTravelPostFunction = new awsAppsync.AppsyncFunction(
+		scope,
+		'createTravelPostFunction',
+		{
+			name: 'createTravelPostFunction',
+			api,
+			dataSource: TravelPostDataSource,
+			runtime: awsAppsync.FunctionRuntime.JS_1_0_0,
+			code: awsAppsync.Code.fromAsset(
+				path.join(__dirname, 'graphql/functions/Mutation.createTravelPost.js')
+			),
+		}
+	)
+
 	const getTravelPostFunction = new awsAppsync.AppsyncFunction(
 		scope,
 		'getTravelPostFunction',
@@ -60,16 +74,30 @@ export function createAppSyncAPI(scope: Construct, props: AppSyncAPIProps) {
 		}
 	)
 
-	const createTravelPostFunction = new awsAppsync.AppsyncFunction(
+	const updateTravelPostFunction = new awsAppsync.AppsyncFunction(
 		scope,
-		'createTravelPostFunction',
+		'updateTravelPostFunction',
 		{
-			name: 'createTravelPostFunction',
+			name: 'updateTravelPostFunction',
 			api,
 			dataSource: TravelPostDataSource,
 			runtime: awsAppsync.FunctionRuntime.JS_1_0_0,
 			code: awsAppsync.Code.fromAsset(
-				path.join(__dirname, 'graphql/functions/Mutation.createTravelPost.js')
+				path.join(__dirname, 'graphql/functions/Mutation.updateTravelPost.js')
+			),
+		}
+	)
+
+	const deleteTravelPostFunction = new awsAppsync.AppsyncFunction(
+		scope,
+		'deleteTravelPostFunction',
+		{
+			name: 'deleteTravelPostFunction',
+			api,
+			dataSource: TravelPostDataSource,
+			runtime: awsAppsync.FunctionRuntime.JS_1_0_0,
+			code: awsAppsync.Code.fromAsset(
+				path.join(__dirname, 'graphql/functions/Mutation.deleteTravelPost.js')
 			),
 		}
 	)
@@ -100,6 +128,15 @@ export function createAppSyncAPI(scope: Construct, props: AppSyncAPIProps) {
       return ctx.prev.result
     }
   `
+	new awsAppsync.Resolver(scope, 'createTravelPostPipelineResolver', {
+		api,
+		typeName: 'Mutation',
+		fieldName: 'createTravelPost',
+		code: awsAppsync.Code.fromInline(passThroughSteps),
+		runtime: awsAppsync.FunctionRuntime.JS_1_0_0,
+		pipelineConfig: [createTravelPostFunction],
+	})
+
 	new awsAppsync.Resolver(scope, 'getTravelPostPipelineResolver', {
 		api,
 		typeName: 'Query',
@@ -109,13 +146,22 @@ export function createAppSyncAPI(scope: Construct, props: AppSyncAPIProps) {
 		pipelineConfig: [getTravelPostFunction],
 	})
 
-	new awsAppsync.Resolver(scope, 'createTravelPostPipelineResolver', {
+	new awsAppsync.Resolver(scope, 'updateTravelPostPipelineResolver', {
 		api,
 		typeName: 'Mutation',
-		fieldName: 'createTravelPost',
+		fieldName: 'updateTravelPost',
 		code: awsAppsync.Code.fromInline(passThroughSteps),
 		runtime: awsAppsync.FunctionRuntime.JS_1_0_0,
-		pipelineConfig: [createTravelPostFunction],
+		pipelineConfig: [updateTravelPostFunction],
+	})
+
+	new awsAppsync.Resolver(scope, 'deleteTravelPostPipelineResolver', {
+		api,
+		typeName: 'Mutation',
+		fieldName: 'deleteTravelPost',
+		code: awsAppsync.Code.fromInline(passThroughSteps),
+		runtime: awsAppsync.FunctionRuntime.JS_1_0_0,
+		pipelineConfig: [deleteTravelPostFunction],
 	})
 
 	new awsAppsync.Resolver(scope, 'listTravelPostsPipelineResolver', {

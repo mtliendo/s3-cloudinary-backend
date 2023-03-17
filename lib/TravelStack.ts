@@ -1,6 +1,6 @@
 import { CfnOutput, Stack } from 'aws-cdk-lib'
 import { Construct } from 'constructs'
-import { CDKContext } from '../types'
+import { CDKContext } from '../cdkcontext'
 import { createAppSyncAPI } from './api/appsync'
 import { createTravelUserpool } from './cognito/auth'
 import { createTravelTable } from './database/travelTable'
