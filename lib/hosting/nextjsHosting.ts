@@ -71,6 +71,7 @@ export function createNextJSHosting(
 
 	const prodBranch = amplifyApp.addBranch('main', {
 		stage: 'PRODUCTION',
+		pullRequestPreview: true,
 	})
 
 	const devBranch = amplifyApp.addBranch('develop', {
