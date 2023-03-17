@@ -39,10 +39,7 @@ export function createNextJSHosting(
 				statements: [
 					new PolicyStatement({
 						effect: Effect.ALLOW,
-						actions: [
-							'appsync:GetGraphqlApi',
-							'appsync:GetIntrospectionSchema',
-						],
+						actions: ['appsync:GetIntrospectionSchema'],
 						resources: [`arn:aws:appsync:::apis/*`],
 					}),
 				],
@@ -81,8 +78,7 @@ export function createNextJSHosting(
 					},
 					build: {
 						commands: [
-							`APPSYNC_ID=$(aws appsync get-graphql-api --api-id ${props.appSyncAPIId} --query "graphqlApi.apiId") &&\
-							aws appsync get-introspection-schema --api-id $APPSYNC_ID --format json schema.json &&\
+							`aws appsync get-introspection-schema --api-id ${props.appSyncAPIId} --format json schema.json &&\
 							npx @aws-amplify/cli codegen`,
 
 							'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$cloudinaryCloudName \
